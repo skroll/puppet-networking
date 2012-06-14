@@ -15,7 +15,7 @@ class networking (
   $packages = undef,
 ) {
   if $packages == undef {
-    case $operatingsystem {
+    case $::operatingsystem {
       darwin: {
         # There are no darwin packages required
       }
@@ -25,7 +25,10 @@ class networking (
       ubuntu: {
         include networking::defaults::packages::debian
       }
-      default: { fail ("Don't know how to handle networking packages on $operatingsystem") }
+      default: {
+        fail("Don't know how to handle networking packages on \
+              ${::operatingsystem}")
+      }
     }
   }
   else {
