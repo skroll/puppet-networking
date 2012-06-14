@@ -12,12 +12,15 @@
 #
 # [Remember: No empty lines between comments and class definition]
 class networking (
-  $packages => undef,
+  $packages = undef,
 ) {
   if $packages == undef {
     case $operatingsystem {
       darwin: {
         include networking::defaults::packages::darwin
+      }
+      debian: {
+        include networking::defaults::packages::debian
       }
       ubuntu: {
         include networking::defaults::packages::debian
