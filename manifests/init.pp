@@ -27,7 +27,7 @@ class networking (
       }
       default: {
         fail("Don't know how to handle networking packages on \
-              ${::operatingsystem}")
+${::operatingsystem}")
       }
     }
   }
