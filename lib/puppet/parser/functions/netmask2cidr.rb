@@ -11,5 +11,5 @@ Puppet::Parser::Functions.newfunction(:netmask2cidr, :type => :rvalue) do |args|
     while ((IPAddr.new(args[0]) & IPAddr.new("255.255.255.255")) << i).to_i > 0
         i += 1
     end
-    i
+    i.to_s
 end
