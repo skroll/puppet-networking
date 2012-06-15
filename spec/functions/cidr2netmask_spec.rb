@@ -42,7 +42,7 @@ describe 'cidr2netmask' do
     ]
 
     tests.each do |test|
-        it "should return '%s' with input '%s'" % [test[:out], test[:in]] do
+        it "should return '#{test[:out]}' with input '#{test[:in]}'" do
             should run.with_params(test[:in]).and_return(test[:out])
         end
     end

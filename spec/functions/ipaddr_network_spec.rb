@@ -9,7 +9,7 @@ describe 'ipaddr_network' do
     ]
 
     tests.each do |test|
-       it "should return '%s' with input ('%s', '%s')" % [test[:out], test[:ipaddr], test[:network]] do
+       it "should return '#{test[:out]}' with input ('#{test[:ipaddr]}', '#{test[:network]}')" do
             should run.with_params(test[:ipaddr], test[:network]).and_return(test[:out])
         end
     end
