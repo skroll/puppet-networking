@@ -11,14 +11,15 @@ define networking::iface::ethernet (
 ) {
   include networking::iface
 
-  if ($ensure == "present") {
+  if ($ensure == 'present') {
     if ($address) {
       if (!$netmask) {
-        if ipaddr_network($address, $networking_netmask) == $networking_network {
-          $_netmask = $networking_netmask
+        if ipaddr_network($address, $::networking_netmask)
+          == $::networking_network {
+          $_netmask = $::networking_netmask
         }
         else {
-          fail("must specify a netmask")
+          fail('must specify a netmask')
         }
       }
       else {
@@ -32,7 +33,7 @@ define networking::iface::ethernet (
 
       configure { "$name create":
         iface  => $name,
-        method => "static",
+        method => 'static',
         up     => false,
         down   => $down,
       }
@@ -45,32 +46,34 @@ define networking::iface::ethernet (
 
       option {
         "$name address":
-          option => "address",
+          option => 'address',
           value  => $address;
         "$name netmask":
-          option => "netmask",
+          option => 'netmask',
           value  => $_netmask;
         "$name broadcast":
-          option => "broadcast",
+          option => 'broadcast',
           value  => $_broadcast;
       }
 
       if ($gateway) {
         option { "$name gateway":
-          option => "gateway",
+          option => 'gateway',
           value  => $gateway,
         }
       }
 
+      $really = $down ? { true => false, false => $up }
+
       up { "ethernet $name up":
         iface  => $name,
-        really => $down ? { true => false, false => $up},
+        really => $really,
       }
     }
     else {
       $method = $dhcp ? {
-        true    => "dhcp",
-        default => "manual",
+        true    => 'dhcp',
+        default => 'manual',
       }
 
       configure { "$name create":
@@ -86,7 +89,7 @@ define networking::iface::ethernet (
     }
   }
 
-  auto { "$name":
+  auto { $name:
     ensure => $ensure,
     auto   => $auto,
   }
